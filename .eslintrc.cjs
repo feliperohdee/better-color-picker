@@ -4,9 +4,16 @@ module.exports = {
 		es2020: true,
 		node: true
 	},
-	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react-hooks/recommended', 'plugin:storybook/recommended'],
+	extends: [
+		'eslint:recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:react-hooks/recommended',
+		'plugin:storybook/recommended'
+	],
 	ignorePatterns: [
 		'dist',
+		'dist-export',
+		'dist-storybook',
 		'.eslintrc.cjs'
 	],
 	parser: '@typescript-eslint/parser',

@@ -1,11 +1,13 @@
+import '@/style.css';
+
 import {
 	useState
 } from 'react';
 
 import Picker from '@/components/Picker';
 
-const App = () => {
-	const [
+const Demo = () => {
+	const [	
 		value,
 		setValue
 	// ] = useState('#d7006c');
@@ -17,14 +19,14 @@ const App = () => {
 				background: value
 			}}>
 			<Picker onChange={setValue}
-				textAddColor='Adicionar Cor'
-				textLinear='Linear'
-				textRadial='Radial'
-				textColor='Cor'
-				textGradient='Gradiente'
+				// textAddColor='Adicionar Cor'
+				// textLinear='Linear'
+				// textRadial='Radial'
+				// textColor='Cor'
+				// textGradient='Gradiente'
 				value={value}/>
 		</div>
 	);
 };
 
-export default App;
+export default Demo;

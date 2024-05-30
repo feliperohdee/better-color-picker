@@ -9,7 +9,7 @@ import {
 import Picker from '@/components/Picker';
 
 /* eslint-disable sort-keys */
-const meta = {
+const meta: Meta<typeof Picker> = {
 	title: 'Picker',
 	component: Picker,
 	parameters: {
@@ -23,11 +23,7 @@ const meta = {
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
 		defaultValue: {
-			control: 'color'
-		},
-		onChange: {
-			action: 'onChange',
-			control: false
+			control: 'text'
 		},
 		textAddColor: {
 			control: 'text'
@@ -45,14 +41,14 @@ const meta = {
 			control: 'text'
 		},
 		value: {
-			control: 'color'
+			control: 'text'
 		}
 	},
 	// Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
 	args: {
 		onChange: fn()
 	}
-} satisfies Meta<typeof Picker>;
+};
 /* eslint-enable sort-keys */
 
 type Story = StoryObj<typeof meta>;
