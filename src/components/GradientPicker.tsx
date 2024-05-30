@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 import generate, {
 	Shade
 } from 'tailwind-colors-generator';
-import React, {
+import {
 	Fragment,
 	useCallback,
 	useEffect,
@@ -41,7 +41,6 @@ const GradientPicker = ({
 	onChange: (value: GradientState) => void;
 }) => {
 	const click = useRef(true);
-	const clickTimeout = useRef<any | null>(null);
 	const prevState = useRef<GradientState | null>(null);
 	const [
 		open,
@@ -81,29 +80,24 @@ const GradientPicker = ({
 		};
 	});
 
-	const onLengthChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-		click.current = false;
-
+	const onLengthChange = useCallback((length: number, index: number) => {
 		setState(state => {
+			const stops = state.stops.map((stop, stopIndex) => {
+				if (index === stopIndex) {
+					return {
+						...stop,
+						length
+					};
+				}
+	
+				return stop;
+			});
+
 			return {
 				...state,
-				stops: state.stops.map((stop, stopIndex) => {
-					if (index === stopIndex) {
-						return {
-							...stop,
-							length: Number(e.target.value)
-						};
-					}
-		
-					return stop;
-				})
+				stops
 			};
 		});
-
-		clearTimeout(clickTimeout.current!);
-		clickTimeout.current = setTimeout(() => {
-			click.current = true;
-		}, 800);
 	}, []);
 
 	const onColorChange = useCallback((color: chroma.Color, index: number) => {
@@ -158,6 +152,36 @@ const GradientPicker = ({
 	]);
 
 	useEffect(() => {
+		let clientStartX = 0;
+		let clientStartY = 0;
+
+		const onMouseUp = (e: MouseEvent) => {
+			const deltaX = Math.abs(e.clientX - clientStartX);
+			const deltaY = Math.abs(e.clientY - clientStartY);
+
+			clientStartX = 0;
+			clientStartY = 0;
+			
+			click.current = deltaX <= 2 && deltaY <= 2;
+		};
+
+		const onMouseDown = (e: MouseEvent) => {
+			clientStartX = e.clientX;
+			clientStartY = e.clientY;
+			
+			click.current = false;
+		};
+
+		window.addEventListener('mousedown', onMouseDown);
+		window.addEventListener('mouseup', onMouseUp);
+
+		return () => {
+			window.removeEventListener('mousedown', onMouseDown);
+			window.removeEventListener('mouseup', onMouseUp);
+		};
+	}, []);
+
+	useEffect(() => {
 		if (prevState.current === state) {
 			return;
 		}
@@ -205,10 +229,16 @@ const GradientPicker = ({
 				length
 			}, index) => {
 				const selfShadeIndex = shades.findIndex(shade => {
-return shade.self;
-});
+					return shade.self;
+				});
+				
 				const shadeMin = selfShadeIndex <= 2 ? selfShadeIndex : 2;
 				const shadeMax = selfShadeIndex <= 2 ? Math.min(shadeMin + 4, shades.length-1) : selfShadeIndex;
+
+				const isFirstStop = index === 0;
+				const isLastStop = index === state.stops.length - 1;
+				const prevStop = isFirstStop ? null : state.stops[index - 1];
+				const nextStop = isLastStop ? null : state.stops[index + 1];
 
 				return (
 					<Fragment key={index}>
@@ -216,7 +246,24 @@ return shade.self;
 							style={{
 								background: `linear-gradient(to right, ${shades[shadeMin].hex} 0%, ${shades[shadeMax].hex} 100%)`
 							}}>
-							<div className='absolute flex items-center justify-center w-6 h-6 -translate-y-1/2 bg-white rounded-full shadow-md opacity-100 pointer-events-none top-1/2 ring-1 ring-black/5'
+							{/* first stop marker */}
+							{prevStop ? (
+								<div className='absolute w-1 h-1 -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 bg-slate-900/20'
+									style={{
+										left: `calc(${prevStop.length}% - ${(prevStop.length / 100) * 1.5}rem + 0.75rem)`
+									}}/>
+							) : null}
+
+							{/* next stop marker */}
+							{nextStop ? (
+								<div className='absolute w-1 h-1 -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 bg-slate-900/20'
+									style={{
+										left: `calc(${nextStop.length}% - ${(nextStop.length / 100) * 1.5}rem + 0.75rem)`
+									}}/>
+							) : null}
+
+							{/* handler */}
+							<div className='absolute flex items-center justify-center w-6 h-6 -translate-y-1/2 bg-white rounded-full shadow-md pointer-events-none top-1/2 ring-1 ring-black/5'
 								style={{
 									left: `calc(${length}% - ${(length / 100) * 1.5}rem)`
 								}}>
@@ -233,7 +280,13 @@ return shade.self;
 								max={100}
 								min={0}
 								onChange={e => {
-									onLengthChange(e, index);
+									const length = Number(e.target.value);
+
+									if (length < (prevStop?.length || 0) || length > (nextStop?.length || 100)) {
+										return;
+									}
+
+									onLengthChange(length, index);
 								}}
 								onClick={() => {
 									onColorPickerClick(index);
@@ -244,13 +297,19 @@ return shade.self;
 						</div>
 
 						{open === index ? (
-							<div className='relative p-1 bg-gray-900 shadow-xl rounded-xl'>
-								<FlatPicker className='p-3'
-									color={color}
-									onChange={value => {
-										onColorChange(value, index);
+							<Fragment>
+								<div className='fixed inset-0'
+									onMouseDown={() => {
+										setOpen(-1);
 									}}/>
-							</div>
+								<div className='relative p-1 bg-gray-900 shadow-xl rounded-xl'>
+									<FlatPicker className='p-3'
+										color={color}
+										onChange={value => {
+											onColorChange(value, index);
+										}}/>
+								</div>
+							</Fragment>
 						) : null}
 					</Fragment>
 				);
