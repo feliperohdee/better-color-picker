@@ -538,7 +538,7 @@ const GradientPicker = ({
 										value={length}/>
 								</div>
 
-								{index >= 2 ? (
+								{state.stops.length > 2 ? (
 									<button className='flex flex-shrink-0 justify-center items-center bg-slate-100 rounded-full w-6 h-6'
 										onClick={() => {
 											onRemoveStop(index);

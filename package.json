@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
 	"build": "tsc && vite build",
-    "build-deploy-storybook": "storybook build --output-dir ./dist-storybook && aws s3 sync dist-storybook s3://feliperohde/color-picker --cache-control no-cache --acl public-read",
-    "build-deploy-demo": "yarn build && aws s3 sync dist s3://feliperohde/color-picker --cache-control no-cache --acl public-read",
+    "build-deploy-storybook": "storybook build --output-dir ./dist-storybook && aws s3 sync dist-storybook s3://feliperohde/color-picker --cache-control no-cache --acl public-read --delete",
+    "build-deploy-demo": "yarn build && aws s3 sync dist s3://feliperohde/color-picker --cache-control no-cache --acl public-read --delete",
     "dev": "vite",
     "dev-storybook": "storybook dev -p 6006",
     "export": "yarn build --outDir ./dist-export --mode export",
