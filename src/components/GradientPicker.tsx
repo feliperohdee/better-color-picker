@@ -125,12 +125,18 @@ const GradientPicker = ({
 	className = '',
 	colors,
 	gradient,
-	onChange
+	onChange,
+	textAddColor,
+	textLinear,
+	textRadial
 }: {
 	className?: string;
 	colors: chroma.Color[];
 	gradient: Gradient;
 	onChange: (value: GradientState) => void;
+	textAddColor: string;
+	textLinear: string;
+	textRadial: string;
 }) => {
 	const changing = useRef(false);
 	const click = useRef(true);
@@ -409,7 +415,7 @@ const GradientPicker = ({
 							onClick={() => {
 								onTypeChange('linear-gradient');
 							}}>
-							Linear
+							{textLinear}
 						</button>
 
 						<button className={clsx('flex items-center px-5 py-1.5', {
@@ -418,7 +424,7 @@ const GradientPicker = ({
 							onClick={() => {
 								onTypeChange('radial-gradient');
 							}}>
-							Radial
+							{textRadial}
 						</button>
 					</div>
 				</div>
@@ -570,7 +576,7 @@ const GradientPicker = ({
 
 				<button className='block bg-white shadow px-5 py-1.5 rounded-full w-full font-medium text-slate-600 text-sm overflow-hidden ring-1 ring-black/5'
 					onClick={onAddStop}>
-					Add Color
+					{textAddColor}
 				</button>
 			</div>
 		</Fragment>

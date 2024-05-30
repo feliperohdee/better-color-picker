@@ -19,10 +19,20 @@ const likeGradient = (value: string) => {
 const Picker = ({
 	defaultValue = '#fff',
 	onChange,
+	textAddColor = 'Add Color',
+	textColor = 'Color',
+	textGradient = 'Gradient',
+	textLinear = 'Linear',
+	textRadial = 'Radial',
 	value = ''
 }: {
 	defaultValue?: string;
 	onChange: (value: string) => void;
+	textAddColor?: string;
+	textColor?: string;
+	textGradient?: string;
+	textLinear?: string;
+	textRadial?: string;
 	value?: string;
 }) => {
 	const {
@@ -120,7 +130,7 @@ const Picker = ({
 							onClick={() => {
 								onTypeChange('color');
 							}}>
-							Color
+							{textColor}
 						</button>
 
 						<button className={clsx('flex items-center px-5 py-1.5', {
@@ -129,7 +139,7 @@ const Picker = ({
 							onClick={() => {
 								onTypeChange('gradient');
 							}}>
-							Gradient
+							{textGradient}
 						</button>
 					</div>
 				</div>
@@ -146,7 +156,10 @@ const Picker = ({
 						gradient={gradient!}
 						onChange={value => {
 							onChange(GradientPicker.toString(value));
-						}}/>
+						}}
+						textAddColor={textAddColor}
+						textLinear={textLinear}
+						textRadial={textRadial}/>
 				) : null}
 			</div>
 		</div>

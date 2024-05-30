@@ -17,7 +17,12 @@ const App = () => {
 				background: value
 			}}>
 			<Picker onChange={setValue}
-			value={value}/>
+				textAddColor='Adicionar Cor'
+				textLinear='Linear'
+				textRadial='Radial'
+				textColor='Cor'
+				textGradient='Gradiente'
+				value={value}/>
 		</div>
 	);
 };
