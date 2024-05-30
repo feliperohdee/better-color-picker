@@ -1,13 +1,16 @@
+import clsx from 'clsx';
 import chroma from 'chroma-js';
+import generate from 'tailwind-colors-generator';
 import {
+	useCallback,
 	useMemo
 } from 'react';
 
-import FlatPicker from '@/components/FlatPicker';
+import ColorPicker from '@/components/ColorPicker';
 import GradientPicker from '@/components/GradientPicker';
 import gradientParser, {
 	Gradient
-} from '@/libs/gradient-parser';
+} from '@/libs/gradientParser';
 
 const likeGradient = (value: string) => {
 	return value.includes('gradient');
@@ -88,27 +91,64 @@ const Picker = ({
 		value
 	]);
 
+	const onTypeChange = useCallback((type: 'color' | 'gradient') => {
+		if (type === 'color') {
+			onChange(colors[0].css());
+		} else {
+			const generatedColors = generate(colors[0]);
+			const restColors = generatedColors.combinations.analogous.slice(0, 1)
+				.map(color => {
+					return color.hex;
+				});
+
+			onChange(`linear-gradient(to right, ${generatedColors.hex}, ${restColors.join(', ')})`);
+		}
+	}, [
+		colors,
+		onChange
+	]);
+
 	return (
-		<div className='w-[300px]'
-			onClick={() => {
-				onChange(value);
-			}}>
-			{type === 'color' ? (
-				<FlatPicker className='max-w-[300px] bg-white rounded-3xl shadow-xl px-5 pt-5 pb-4 ring-1 ring-black/10'
-					onChange={value => {
-						onChange(value.css());
-					}}
-					color={colors[0]}/>
-			) : null}
-			
-			{type === 'gradient' ? (
-				<GradientPicker className='max-w-[300px] bg-white rounded-3xl shadow-xl px-5 pt-5 pb-4 ring-1 ring-black/10'
-					colors={colors}
-					gradient={gradient!}
-					onChange={value => {
-						onChange(GradientPicker.toString(value));
-					}}/>
-			) : null}
+		<div className='w-[300px]'>
+			<div className='bg-white shadow-xl px-5 pt-5 pb-4 rounded-3xl max-w-[300px] ring-1 ring-black/10'>
+				{/* selector */}
+				<div className='flex justify-center items-center mb-3'>
+					<div className='flex justify-center items-center bg-slate-50 shadow rounded-full font-medium text-slate-400 text-sm overflow-hidden ring-1 ring-black/5'>
+						<button className={clsx('flex items-center px-5 py-1.5', {
+							'bg-white text-slate-600': type === 'color'
+						})}
+							onClick={() => {
+								onTypeChange('color');
+							}}>
+							Color
+						</button>
+
+						<button className={clsx('flex items-center px-5 py-1.5', {
+							'bg-white text-slate-600': type === 'gradient'
+						})}
+							onClick={() => {
+								onTypeChange('gradient');
+							}}>
+							Gradient
+						</button>
+					</div>
+				</div>
+
+				{type === 'color' ? (
+					<ColorPicker onChange={value => {
+							onChange(value.css());
+						}}
+						color={colors[0]}/>
+				) : null}
+				
+				{type === 'gradient' ? (
+					<GradientPicker colors={colors}
+						gradient={gradient!}
+						onChange={value => {
+							onChange(GradientPicker.toString(value));
+						}}/>
+				) : null}
+			</div>
 		</div>
 	);
 };

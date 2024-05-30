@@ -4,9 +4,9 @@ import {
 	it
 } from 'vitest';
 
-import parse from './gradient-parser';
+import parse from './gradientParser';
 
-describe('libs/gradient-parser.ts', () => {
+describe('libs/gradientParser.ts', () => {
 	describe('single color', () => {
 		it('should parse', () => {
 			try {
@@ -90,10 +90,10 @@ describe('libs/gradient-parser.ts', () => {
                     type: 'hex',
                     value: 'feb47b'
                 }],
-                orientation: [{
+                orientation: {
                     type: 'shape',
                     value: 'circle'
-                }],
+                },
                 type: 'radial-gradient'
             }]);
 		});

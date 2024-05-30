@@ -1,15 +1,23 @@
+import {
+	useState
+} from 'react';
+
 import Picker from '@/components/Picker';
 
 const App = () => {
+	const [
+		value,
+		setValue
+	// ] = useState('#d7006c');
+	] = useState('linear-gradient(to right, #d7006c, #feb47b, #aab47b, #af706c)');
+
 	return (
-		<div className='flex items-center justify-center min-h-screen py-8 bg-slate-50'>
-			<Picker onChange={value => {
-				console.log('value', value);
-			}}
-			// value='#d7006caa'
-			// value='linear-gradient(to right, #d7006c, #feb47b)'
-			value='radial-gradient(circle, #d7006c 0%, #feb47b 100%, #d7006c 100%)'
-			/>
+		<div className='flex justify-center items-center bg-slate-50 py-8 min-h-dvh'
+			style={{
+				background: value
+			}}>
+			<Picker onChange={setValue}
+			value={value}/>
 		</div>
 	);
 };

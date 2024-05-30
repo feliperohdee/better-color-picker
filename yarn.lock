@@ -2283,8 +2283,8 @@ supports-preserve-symlinks-flag@^1.0.0:
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
 "tailwind-colors-generator@https://github.com/feliperohdee/tailwind-colors-generator":
-  version "1.0.14"
-  resolved "https://github.com/feliperohdee/tailwind-colors-generator#19b479bfeaf12574adb174d5f9c3fd7cc6ddf908"
+  version "1.0.15"
+  resolved "https://github.com/feliperohdee/tailwind-colors-generator#f0c4e3a0271bd1611a1556e4963eb3c7947bbbdb"
   dependencies:
     chroma-js "^2.4.2"
 

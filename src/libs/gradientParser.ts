@@ -1,6 +1,6 @@
 export interface Gradient {
 	colorStops: ColorStop[];
-	orientation?: Orientation | Orientation[];
+	orientation?: Orientation;
     type: (
 		'linear-gradient' |
 		'repeating-linear-gradient' |
@@ -108,8 +108,8 @@ const parse = (() => {
 		return (
 			matchGradient('linear-gradient', tokens.linearGradient, matchLinearOrientation) ||
 			matchGradient('repeating-linear-gradient', tokens.repeatingLinearGradient, matchLinearOrientation) ||
-			matchGradient('radial-gradient', tokens.radialGradient, matchListRadialOrientations) ||
-			matchGradient('repeating-radial-gradient', tokens.repeatingRadialGradient, matchListRadialOrientations)
+			matchGradient('radial-gradient', tokens.radialGradient, matchRadialOrientation) ||
+			matchGradient('repeating-radial-gradient', tokens.repeatingRadialGradient, matchRadialOrientation)
 		);
 	};
 
@@ -159,30 +159,6 @@ const parse = (() => {
 
 	const matchAngle = (): any => {
 		return match('angular', tokens.angleValue, 1);
-	};
-
-	const matchListRadialOrientations = (): any[] | undefined => {
-		let radialOrientations: any[] | undefined;
-		let radialOrientation = matchRadialOrientation();
-		let lookaheadCache;
-
-		if (radialOrientation) {
-			radialOrientations = [];
-			radialOrientations = radialOrientations.concat(radialOrientation);
-			lookaheadCache = input;
-			
-			if (scan(tokens.comma)) {
-				const radialOrientation = matchRadialOrientation();
-				
-				if (radialOrientation) {
-					radialOrientations = radialOrientations.concat(radialOrientation);
-				} else {
-					input = lookaheadCache;
-				}
-			}
-		}
-
-		return radialOrientations;
 	};
 
 	const matchRadialOrientation = (): any => {
