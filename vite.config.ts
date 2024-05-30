@@ -25,7 +25,7 @@ export default defineConfig(env => {
 		config.build = {
 			copyPublicDir: false,
 			lib: {
-				entry: './src/export.ts',
+				entry: './src/index-export.ts',
 				fileName: 'index',
 				formats: ['es']
 			},
@@ -47,9 +47,9 @@ export default defineConfig(env => {
 					'**/*.stories.*'
 				],
 				include: [
-					'./src/components',
-					'./src/libs',
-					'./src/export.ts'
+					'./src/components/*',
+					'./src/libs/*',
+					'./src/index-export.ts'
 				],
 				insertTypesEntry: true,
 				rollupTypes: true
