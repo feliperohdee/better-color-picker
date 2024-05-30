@@ -1,8 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type {
+    Meta,
+    StoryObj
+} from '@storybook/react';
+import {
+    fn
+} from '@storybook/test';
 
 import Picker from '@/components/Picker';
 
+/* eslint-disable sort-keys */
 const meta = {
 	title: 'Picker',
 	component: Picker,
@@ -11,7 +17,9 @@ const meta = {
 		layout: 'centered'
 	},
 	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-	tags: ['autodocs'],
+	tags: [
+		'autodocs'
+	],
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
 		defaultValue: {
@@ -45,17 +53,30 @@ const meta = {
 		onChange: fn()
 	}
 } satisfies Meta<typeof Picker>;
+/* eslint-enable sort-keys */
 
 type Story = StoryObj<typeof meta>;
 
-export const PickerDemo: Story = {
+export const Flat: Story = {
 	args: {
 		defaultValue: '#d7006c',
 		textAddColor: 'Adicionar Cor',
-		textLinear: 'Linear',
-		textRadial: 'Radial',
 		textColor: 'Cor',
 		textGradient: 'Gradiente',
+		textLinear: 'Linear',
+		textRadial: 'Radial',
+		value: '#d7006c'
+	}
+};
+
+export const Gradient: Story = {
+	args: {
+		defaultValue: '#d7006c',
+		textAddColor: 'Adicionar Cor',
+		textColor: 'Cor',
+		textGradient: 'Gradiente',
+		textLinear: 'Linear',
+		textRadial: 'Radial',
 		value: 'linear-gradient(to right, #d7006c, #feb47b, #aab47b, #af706c)'
 	}
 };
