@@ -512,7 +512,7 @@ const GradientPicker = ({
 										max={100}
 										min={0}
 										onChange={e => {
-											const length = clamp(Number(e.target.value), prevStop?.length || 0, nextStop?.length || 100);
+											const length = clamp(Number(e.target.value), prevStop ? prevStop.length : 0, nextStop ? nextStop.length : 100);
 											
 											changing.current = true;
 
