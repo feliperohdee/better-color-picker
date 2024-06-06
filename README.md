@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Better Color Picker
 
-Currently, two official plugins are available:
+### Usage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```jsx
+import 'better-color-picker/style.css';
 
-## Expanding the ESLint configuration
+import { useState } from 'react';
+import Picker from 'better-color-picker';
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+const Demo = () => {
+  const [value, setValue] = useState('linear-gradient(to right, #d7006c, #feb47b, #aab47b, #af706c)');
 
-- Configure the top-level `parserOptions` property like this:
+  return (
+    <div className='flex justify-center items-center bg-slate-50 py-8 min-h-dvh' style={{ background: value }}>
+      <Picker 
+        className='shadow-xl rounded-3xl max-w-[300px] ring-1 ring-black/10' 
+        onChange={setValue} 
+        value={value}
+      />
+    </div>
+  );
+};
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+export default Demo;
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Props
+
+- `className`: Custom class names for additional styling.
+- `onChange`: Callback function triggered when the selected color/gradient changes.
+- `value`: The current value of the selected color/gradient.
+
+You can customize the `Picker` component by modifying the following props:
+
+- `textAddColor`: Text for the "Add Color" button.
+- `textLinear`: Text for the "Linear" gradient option.
+- `textRadial`: Text for the "Radial" gradient option.
+- `textColor`: Text for the "Color" label.
+- `textGradient`: Text for the "Gradient" label.
+
