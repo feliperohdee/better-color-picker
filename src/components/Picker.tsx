@@ -119,8 +119,8 @@ const Picker = ({
 	]);
 
 	return (
-		<div className='w-[300px]'>
-			<div className='bg-white shadow-xl px-5 pt-5 pb-4 rounded-3xl max-w-[300px] select-none ring-1 ring-black/10'>
+		<div className='w-full max-w-[300px]'>
+			<div className='bg-white shadow-xl px-5 pt-5 pb-4 rounded-3xl select-none ring-1 ring-black/10'>
 				{/* selector */}
 				<div className='flex justify-center items-center mb-3'>
 					<div className='flex justify-center items-center bg-slate-50 shadow rounded-full font-medium text-slate-400 text-sm overflow-hidden ring-1 ring-black/5'>
