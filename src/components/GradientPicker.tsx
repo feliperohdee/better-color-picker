@@ -449,7 +449,7 @@ const GradientPicker = ({
 
 				{/* angle */}
 				{gradient.type === 'linear-gradient' ? (
-					<div className='relative bg-slate-100 rounded-full w-full h-6'>
+					<div className='relative bg-slate-100 rounded-full w-full h-6 touch-none'>
 						{/* handler */}
 						<div className='top-1/2 absolute flex justify-center items-center bg-white shadow-md rounded-full w-6 h-6 text-[9px] text-slate-600 -translate-y-1/2 pointer-events-none ring-1 ring-black/5 tabular-nums'
 							style={{
@@ -470,6 +470,7 @@ const GradientPicker = ({
 					</div>
 				) : null}
 
+				{/* stops */}
 				{state.stops.map(({
 					color,
 					length,
@@ -491,7 +492,7 @@ const GradientPicker = ({
 					return (
 						<Fragment key={index}>
 							<div className='flex items-center gap-1'>
-								<div className='relative rounded-full w-full h-6'
+								<div className='relative rounded-full w-full h-6 touch-none'
 									style={{
 										background: `linear-gradient(to right, ${hexLight} 0%, ${hexDark} 100%)`
 									}}>

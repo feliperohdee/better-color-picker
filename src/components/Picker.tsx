@@ -141,7 +141,7 @@ const Picker = ({
 	]);
 
 	return (
-		<div className={clsx('w-full bg-white px-5 pt-5 pb-4 select-none touch-none', className)}
+		<div className={clsx('w-full bg-white px-5 pt-5 pb-4 select-none', className)}
 			onClick={e => {
 				e.preventDefault();
 				e.stopPropagation();

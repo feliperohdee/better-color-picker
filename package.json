@@ -1,5 +1,9 @@
 {
-    "name": "better-color-picker",
+    "name": "@simpleimg/better-color-picker",
+	"author": {
+        "email": "felipe@simpleimagecloud.com",
+        "name": "Felipe Rohde"
+    },
     "version": "0.0.2",
     "type": "module",
     "scripts": {
