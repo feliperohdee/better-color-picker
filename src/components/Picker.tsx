@@ -141,7 +141,11 @@ const Picker = ({
 	]);
 
 	return (
-		<div className={clsx('w-full bg-white px-5 pt-5 pb-4 select-none ring-1 ring-black/10', className)}
+		<div className={clsx('w-full bg-white px-5 pt-5 pb-4 select-none touch-none', className)}
+			onClick={e => {
+				e.preventDefault();
+				e.stopPropagation();
+			}}
 			style={style}>
 			{/* selector */}
 			{allowChangeType ? (
@@ -150,8 +154,7 @@ const Picker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': type === 'color'
 						})}
-							onClick={e => {
-								e.preventDefault();
+							onClick={() => {
 								onTypeChange('color');
 							}}>
 							{textColor}
@@ -160,8 +163,7 @@ const Picker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': type === 'gradient'
 						})}
-							onClick={e => {
-								e.preventDefault();
+							onClick={() => {
 								onTypeChange('gradient');
 							}}>
 							{textGradient}

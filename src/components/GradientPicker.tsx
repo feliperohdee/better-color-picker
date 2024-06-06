@@ -4,7 +4,7 @@ import generate, {
 	Shade,
 	TextColor
 } from 'tailwind-colors-generator';
-import React, {
+import {
 	Fragment,
 	useCallback,
 	useEffect,
@@ -275,9 +275,7 @@ const GradientPicker = ({
 		open
 	]);
 
-	const onAddStop = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-
+	const onAddStop = useCallback(() => {
 		const lastStop = state.stops[state.stops.length - 1];
 		const generatedColors = generate(lastStop.color, {
 			combinationsShades: true
@@ -324,13 +322,18 @@ const GradientPicker = ({
 	}, []);
 
 	useEffect(() => {
-		const onInteraction = () => {
-			setTimeout(() => {
-				if (!focusNode.current?.contains(document.activeElement)) {
-					setOpen(-1);
-					focusNode.current = null;
-				}
-			});
+		const onInteraction = (e: TouchEvent | MouseEvent) => {
+			const clientX = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+			const clientY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+			const node = document.elementFromPoint(clientX, clientY);
+
+			if (
+				focusNode.current &&
+				!focusNode.current.contains(node)
+			) {
+				setOpen(-1);
+				focusNode.current = null;
+			}
 		};
 
 		window.addEventListener('mousedown', onInteraction);
@@ -427,8 +430,7 @@ const GradientPicker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': state.type === 'linear-gradient'
 						})}
-							onClick={e => {
-								e.preventDefault();
+							onClick={() => {
 								onTypeChange('linear-gradient');
 							}}>
 							{textLinear}
@@ -437,8 +439,7 @@ const GradientPicker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': state.type === 'radial-gradient'
 						})}
-							onClick={e => {
-								e.preventDefault();
+							onClick={() => {
 								onTypeChange('radial-gradient');
 							}}>
 							{textRadial}
@@ -450,7 +451,7 @@ const GradientPicker = ({
 				{gradient.type === 'linear-gradient' ? (
 					<div className='relative bg-slate-100 rounded-full w-full h-6'>
 						{/* handler */}
-						<div className='top-1/2 absolute flex justify-center items-center bg-white shadow-md rounded-full w-6 h-6 touch-none text-[9px] text-slate-600 -translate-y-1/2 pointer-events-none ring-1 ring-black/5 tabular-nums'
+						<div className='top-1/2 absolute flex justify-center items-center bg-white shadow-md rounded-full w-6 h-6 text-[9px] text-slate-600 -translate-y-1/2 pointer-events-none ring-1 ring-black/5 tabular-nums'
 							style={{
 								left: handlerCalc((angle / 360) * 100, 1.5)
 							}}>
@@ -511,7 +512,7 @@ const GradientPicker = ({
 									) : null}
 
 									{/* handler overlay */}
-									<div className='top-1/2 absolute flex justify-center items-center bg-white shadow-md rounded-full w-6 h-6 touch-none -translate-y-1/2 pointer-events-none ring-1 ring-black/5'
+									<div className='top-1/2 absolute flex justify-center items-center bg-white shadow-md rounded-full w-6 h-6 -translate-y-1/2 pointer-events-none ring-1 ring-black/5'
 										style={{
 											left: handlerCalc(length, 1.5)
 										}}>
@@ -557,8 +558,7 @@ const GradientPicker = ({
 
 								{state.stops.length > 2 ? (
 									<button className='flex flex-shrink-0 justify-center items-center bg-slate-100 rounded-full w-6 h-6'
-										onClick={e => {
-											e.preventDefault();
+										onClick={() => {
 											onRemoveStop(index);
 										}}
 										style={{
@@ -574,11 +574,9 @@ const GradientPicker = ({
 
 							{open === index ? (
 								<div className='relative bg-gray-900 shadow-xl p-1 rounded-xl'
-									ref={focusNode}
-									tabIndex={-1}>
+									ref={focusNode}>
 									<button className='-top-2 -right-2 absolute flex justify-center items-center bg-gray-700 shadow-md rounded-full w-6 h-6 text-white'
-										onClick={e => {
-											e.preventDefault();
+										onClick={() => {
 											setOpen(-1);
 										}}>
 										<XIcon className='w-4 h-4'/>
