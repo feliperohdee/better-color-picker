@@ -105,13 +105,13 @@ const FlatPicker = ({
 					width: '100%'
 				}}/>
 
-			<input className='w-full p-2 pl-3 text-base font-semibold border rounded-lg appearance-none border-slate-200 bg-slate-100 text-slate-700 focus:outline-none focus:bg-slate-50 focus:border focus:border-slate-300'
+			<input className='border-slate-200 focus:border-slate-300 bg-slate-100 focus:bg-slate-50 p-2 pl-3 border focus:border rounded-lg w-full font-semibold text-base text-slate-700 appearance-none focus:outline-none'
 				onBlur={onCommitInputChange}
 				onChange={onInputChange}
 				onKeyDown={onInputKeyDown}
 				value={inputValue || hex}/>
 
-			<div className='flex justify-center overflow-hidden rounded-md shadow-sm ring-1 ring-black/5'>
+			<div className='flex justify-center shadow-sm rounded-md overflow-hidden ring-1 ring-black/5'>
 				{shades.map((shade, index) => {
 					return (
 						<div key={index}
@@ -124,7 +124,7 @@ const FlatPicker = ({
 								color: shade.text.hex
 							}}>
 							{shade.self ? (
-								<div className='absolute w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full left-1/2 top-1/2'
+								<div className='top-1/2 left-1/2 absolute rounded-full w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2'
 									style={{
 										background: shade.text.hex
 									}}/>

@@ -79,7 +79,7 @@ const toAngle = (value: GradientState) => {
 
 const toString = (value: GradientState) => {
 	const stops = value.stops.map(stop => {
-		return `${stop.color.hex()} ${stop.length}%`;
+		return `${stop.color.css()} ${stop.length}%`;
 	});
 
 	let result = 'bottom';
