@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import chroma from 'chroma-js';
 import generate from 'tailwind-colors-generator';
-import {
+import React, {
 	useCallback,
 	useMemo
 } from 'react';
@@ -17,6 +17,7 @@ const likeGradient = (value: string) => {
 };
 
 const Picker = ({
+	allowChangeType = true,
 	className = '',
 	defaultValue = '#fff',
 	onChange,
@@ -25,8 +26,10 @@ const Picker = ({
 	textGradient = 'Gradient',
 	textLinear = 'Linear',
 	textRadial = 'Radial',
+	style,
 	value = ''
 }: {
+	allowChangeType?: boolean;
 	className?: string;
 	defaultValue?: string;
 	onChange: (value: string) => void;
@@ -35,6 +38,7 @@ const Picker = ({
 	textGradient?: string;
 	textLinear?: string;
 	textRadial?: string;
+	style?: React.CSSProperties;
 	value?: string;
 }) => {
 	const {
@@ -107,11 +111,27 @@ const Picker = ({
 		if (type === 'color') {
 			onChange(colors[0].css());
 		} else {
-			const generatedColors = generate(colors[0]);
-			const restColors = generatedColors.combinations.analogous.slice(0, 1)
+			let generatedColors = generate(colors[0]);
+			let restColors = generatedColors.combinations.analogous.slice(0, 1)
 				.map(color => {
 					return color.hex;
 				});
+
+			if (generatedColors.hex === restColors.join(', ')) {
+				const hexLight = generate.hexByLuminance(70, {
+					shades: generatedColors.shades
+				});
+
+				const hexDark = generate.hexByLuminance(20, {
+					shades: generatedColors.shades
+				});
+
+				restColors = hexDark === generatedColors.hex ? [
+					hexLight
+				] : [
+					hexDark
+				];
+			}
 
 			onChange(`linear-gradient(to right, ${generatedColors.hex}, ${restColors.join(', ')})`);
 		}
@@ -121,9 +141,10 @@ const Picker = ({
 	]);
 
 	return (
-		<div className={clsx('w-full', className)}>
-			<div className='bg-white shadow-xl px-5 pt-5 pb-4 rounded-3xl select-none ring-1 ring-black/10'>
-				{/* selector */}
+		<div className={clsx('w-full bg-white px-5 pt-5 pb-4 select-none ring-1 ring-black/10', className)}
+			style={style}>
+			{/* selector */}
+			{allowChangeType ? (
 				<div className='flex justify-center items-center mb-3'>
 					<div className='flex justify-center items-center bg-slate-50 shadow rounded-full font-medium text-slate-400 text-sm overflow-hidden ring-1 ring-black/5'>
 						<button className={clsx('flex items-center px-5 py-1.5', {
@@ -145,25 +166,25 @@ const Picker = ({
 						</button>
 					</div>
 				</div>
+			) : null}
 
-				{type === 'color' ? (
-					<ColorPicker onChange={value => {
-							onChange(value.css());
-						}}
-						color={colors[0]}/>
-				) : null}
-				
-				{type === 'gradient' ? (
-					<GradientPicker colors={colors}
-						gradient={gradient!}
-						onChange={value => {
-							onChange(GradientPicker.toString(value));
-						}}
-						textAddColor={textAddColor}
-						textLinear={textLinear}
-						textRadial={textRadial}/>
-				) : null}
-			</div>
+			{type === 'color' ? (
+				<ColorPicker onChange={value => {
+						onChange(value.css());
+					}}
+					color={colors[0]}/>
+			) : null}
+			
+			{type === 'gradient' ? (
+				<GradientPicker colors={colors}
+					gradient={gradient!}
+					onChange={value => {
+						onChange(GradientPicker.toString(value));
+					}}
+					textAddColor={textAddColor}
+					textLinear={textLinear}
+					textRadial={textRadial}/>
+			) : null}
 		</div>
 	);
 };

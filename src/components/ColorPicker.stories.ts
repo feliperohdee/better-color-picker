@@ -22,6 +22,9 @@ const meta: Meta<typeof Picker> = {
 	],
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
+		allowChangeType: {
+			control: 'boolean'
+		},
 		className: {
 			control: 'text'
 		},
@@ -43,6 +46,9 @@ const meta: Meta<typeof Picker> = {
 		textRadial: {
 			control: 'text'
 		},
+		style: {
+			control: 'object'
+		},
 		value: {
 			control: 'text'
 		}
@@ -58,8 +64,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Flat: Story = {
 	args: {
-		className: 'w-[300px]',
+		allowChangeType: true,
+		className: '',
 		defaultValue: '#d7006c',
+		style: {
+			borderRadius: '1.5rem',
+			width: 300
+		},
 		textAddColor: 'Adicionar Cor',
 		textColor: 'Cor',
 		textGradient: 'Gradiente',
@@ -71,8 +82,13 @@ export const Flat: Story = {
 
 export const Gradient: Story = {
 	args: {
-		className: 'w-[300px]',
+		allowChangeType: true,
+		className: '',
 		defaultValue: '#d7006c',
+		style: {
+			borderRadius: '1.5rem',
+			width: 300
+		},
 		textAddColor: 'Adicionar Cor',
 		textColor: 'Cor',
 		textGradient: 'Gradiente',

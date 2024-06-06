@@ -18,7 +18,7 @@ const Demo = () => {
 			style={{
 				background: value
 			}}>
-			<Picker className='max-w-[300px]'
+			<Picker className='shadow-xl rounded-3xl max-w-[300px]'
 				onChange={setValue}
 				// textAddColor='Adicionar Cor'
 				// textLinear='Linear'

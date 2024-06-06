@@ -138,8 +138,9 @@ const GradientPicker = ({
 	textLinear: string;
 	textRadial: string;
 }) => {
-	const changing = useRef(false);
 	const click = useRef(true);
+	const changing = useRef(false);
+	const focusNode = useRef<HTMLDivElement | null>(null);
 	const prevState = useRef<GradientState | null>(null);
 	const [
 		open,
@@ -321,6 +322,25 @@ const GradientPicker = ({
 	}, []);
 
 	useEffect(() => {
+		const onInteraction = () => {
+			setTimeout(() => {
+				if (!focusNode.current?.contains(document.activeElement)) {
+					setOpen(-1);
+					focusNode.current = null;
+				}
+			});
+		};
+
+		window.addEventListener('mousedown', onInteraction);
+		window.addEventListener('touchstart', onInteraction);
+
+		return () => {
+			window.removeEventListener('mousedown', onInteraction);
+			window.removeEventListener('touchstart', onInteraction);
+		};
+	}, []);
+
+	useEffect(() => {
 		let clientX = 0;
 		let clientY = 0;
 		let clientStartX = 0;
@@ -394,13 +414,6 @@ const GradientPicker = ({
 
 	return (
 		<Fragment>
-			{/* allow close picker when clicked outside */}
-			{open >= 0 ? (
-				<div className='z-50 fixed inset-0'
-					onMouseDown={() => {
-						setOpen(-1);
-					}}/>
-			) : null}
 			<div className={clsx(className, 'relative z-50 space-y-3')}>
 				<div className='rounded-xl w-full h-40 ring-1 ring-black/10'
 					style={{
@@ -498,7 +511,7 @@ const GradientPicker = ({
 										style={{
 											left: handlerCalc(length, 1.5)
 										}}>
-										<div className='rounded-full w-3 h-3'
+										<div className='rounded-full w-3 h-3 ring-1 ring-gray-200'
 											style={{
 												background: color.hex('rgb')
 											}}/>
@@ -555,7 +568,9 @@ const GradientPicker = ({
 							</div>
 
 							{open === index ? (
-								<div className='relative bg-gray-900 shadow-xl p-1 rounded-xl'>
+								<div className='relative bg-gray-900 shadow-xl p-1 rounded-xl'
+									ref={focusNode}
+									tabIndex={-1}>
 									<button className='-top-2 -right-2 absolute flex justify-center items-center bg-gray-700 shadow-md rounded-full w-6 h-6 text-white'
 										onClick={() => {
 											setOpen(-1);
