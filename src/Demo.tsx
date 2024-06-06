@@ -18,7 +18,8 @@ const Demo = () => {
 			style={{
 				background: value
 			}}>
-			<Picker onChange={setValue}
+			<Picker className='max-w-[300px]'
+				onChange={setValue}
 				// textAddColor='Adicionar Cor'
 				// textLinear='Linear'
 				// textRadial='Radial'

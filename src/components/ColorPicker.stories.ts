@@ -22,6 +22,9 @@ const meta: Meta<typeof Picker> = {
 	],
 	// More on argTypes: https://storybook.js.org/docs/api/argtypes
 	argTypes: {
+		className: {
+			control: 'text'
+		},
 		defaultValue: {
 			control: 'text'
 		},
@@ -55,6 +58,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Flat: Story = {
 	args: {
+		className: 'w-[300px]',
 		defaultValue: '#d7006c',
 		textAddColor: 'Adicionar Cor',
 		textColor: 'Cor',
@@ -67,6 +71,7 @@ export const Flat: Story = {
 
 export const Gradient: Story = {
 	args: {
+		className: 'w-[300px]',
 		defaultValue: '#d7006c',
 		textAddColor: 'Adicionar Cor',
 		textColor: 'Cor',

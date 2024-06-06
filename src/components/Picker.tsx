@@ -17,6 +17,7 @@ const likeGradient = (value: string) => {
 };
 
 const Picker = ({
+	className = '',
 	defaultValue = '#fff',
 	onChange,
 	textAddColor = 'Add Color',
@@ -26,6 +27,7 @@ const Picker = ({
 	textRadial = 'Radial',
 	value = ''
 }: {
+	className?: string;
 	defaultValue?: string;
 	onChange: (value: string) => void;
 	textAddColor?: string;
@@ -119,7 +121,7 @@ const Picker = ({
 	]);
 
 	return (
-		<div className='w-full max-w-[300px]'>
+		<div className={clsx('w-full', className)}>
 			<div className='bg-white shadow-xl px-5 pt-5 pb-4 rounded-3xl select-none ring-1 ring-black/10'>
 				{/* selector */}
 				<div className='flex justify-center items-center mb-3'>
