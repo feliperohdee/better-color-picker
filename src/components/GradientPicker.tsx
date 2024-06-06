@@ -4,7 +4,7 @@ import generate, {
 	Shade,
 	TextColor
 } from 'tailwind-colors-generator';
-import {
+import React, {
 	Fragment,
 	useCallback,
 	useEffect,
@@ -275,7 +275,9 @@ const GradientPicker = ({
 		open
 	]);
 
-	const onAddStop = useCallback(() => {
+	const onAddStop = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+
 		const lastStop = state.stops[state.stops.length - 1];
 		const generatedColors = generate(lastStop.color, {
 			combinationsShades: true
@@ -425,7 +427,8 @@ const GradientPicker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': state.type === 'linear-gradient'
 						})}
-							onClick={() => {
+							onClick={e => {
+								e.preventDefault();
 								onTypeChange('linear-gradient');
 							}}>
 							{textLinear}
@@ -434,7 +437,8 @@ const GradientPicker = ({
 						<button className={clsx('flex items-center px-5 py-1.5', {
 							'bg-white text-slate-600': state.type === 'radial-gradient'
 						})}
-							onClick={() => {
+							onClick={e => {
+								e.preventDefault();
 								onTypeChange('radial-gradient');
 							}}>
 							{textRadial}
@@ -553,7 +557,8 @@ const GradientPicker = ({
 
 								{state.stops.length > 2 ? (
 									<button className='flex flex-shrink-0 justify-center items-center bg-slate-100 rounded-full w-6 h-6'
-										onClick={() => {
+										onClick={e => {
+											e.preventDefault();
 											onRemoveStop(index);
 										}}
 										style={{
@@ -572,7 +577,8 @@ const GradientPicker = ({
 									ref={focusNode}
 									tabIndex={-1}>
 									<button className='-top-2 -right-2 absolute flex justify-center items-center bg-gray-700 shadow-md rounded-full w-6 h-6 text-white'
-										onClick={() => {
+										onClick={e => {
+											e.preventDefault();
 											setOpen(-1);
 										}}>
 										<XIcon className='w-4 h-4'/>
