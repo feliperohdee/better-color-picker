@@ -3,7 +3,7 @@ export default {
     bracketSameLine: true,
     eslintIntegration: false,
     jsxSingleQuote: true,
-    plugins: ['prettier-plugin-tailwindcss'],
+    plugins: [],
     printWidth: 150,
     quoteProps: 'as-needed',
     semi: true,
