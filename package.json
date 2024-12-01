@@ -5,7 +5,7 @@
         "name": "Felipe Rohde"
     },
     "license": "MIT",
-    "version": "0.0.6",
+    "version": "0.0.8",
     "type": "module",
     "scripts": {
         "build": "tsc && vite build",
@@ -15,8 +15,8 @@
         "dev": "vite",
         "dev-storybook": "storybook dev -p 6006",
         "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
+        "npm-publish": "yarn build-export && yarn version --patch --no-git-tag-version && yarn publish --non-interactive",
         "preview": "vite preview",
-        "publish-npm": "yarn build-export && yarn version --patch --no-git-tag-version && yarn publish --non-interactive",
         "test": "vitest"
     },
     "devDependencies": {

@@ -105,7 +105,7 @@ const FlatPicker = ({
 					width: '100%'
 				}}/>
 
-			<input className='border-slate-200 focus:border-slate-300 bg-slate-100 focus:bg-slate-50 p-2 pl-3 border focus:border rounded-lg w-full font-medium text-base text-slate-700 appearance-none focus:outline-none'
+			<input className='border-slate-200 focus:border-slate-300 bg-slate-100 focus:bg-slate-50 py-1 pl-3 border focus:border rounded-lg w-full font-medium text-base sm:text-sm text-slate-700 appearance-none focus:outline-none'
 				onBlur={onCommitInputChange}
 				onChange={onInputChange}
 				onKeyDown={onInputKeyDown}
