@@ -1,11 +1,11 @@
 {
-    "name": "@simpleimg/better-color-picker",
+    "name": "@feliperohdedev/better-color-picker",
     "author": {
         "email": "felipe@simpleimagecloud.com",
         "name": "Felipe Rohde"
     },
     "license": "MIT",
-    "version": "0.0.8",
+    "version": "0.0.1",
     "type": "module",
     "scripts": {
         "build": "tsc && vite build",
@@ -15,7 +15,7 @@
         "dev": "vite",
         "dev-storybook": "storybook dev -p 6006",
         "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
-        "npm-publish": "yarn build-export && yarn version --patch --no-git-tag-version && yarn publish --non-interactive",
+        "npm-publish": "yarn build-export && yarn publish --non-interactive --access public",
         "preview": "vite preview",
         "test": "vitest"
     },
